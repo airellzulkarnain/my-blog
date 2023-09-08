@@ -7,17 +7,12 @@
     <header>
         <h1><a href="/">My Blog</a></h1>
     </header>
-    <article>
-        <time>Published: 08-09-2023, 15:53</time>
-        <h2><a href="">Blog 1</a></h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia, odit expedita quasi quidem officiis voluptatem aliquam obcaecati optio vero aut deleniti voluptatibus consequuntur, illum quae ipsam quam magnam aspernatur et.
-        Beatae voluptate facilis, qui laborum excepturi unde. Ea voluptatem velit quae sit veniam consequatur mollitia magni fugiat sunt necessitatibus ratione, id pariatur officia facilis distinctio. Sequi quibusdam cum voluptatem quod!</p>
-    </article>
-    <article>
-        <time>Published: 08-09-2023, 15:53</time>
-        <h2><a href="">Blog 1</a></h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia, odit expedita quasi quidem officiis voluptatem aliquam obcaecati optio vero aut deleniti voluptatibus consequuntur, illum quae ipsam quam magnam aspernatur et.
-        Beatae voluptate facilis, qui laborum excepturi unde. Ea voluptatem velit quae sit veniam consequatur mollitia magni fugiat sunt necessitatibus ratione, id pariatur officia facilis distinctio. Sequi quibusdam cum voluptatem quod!</p>
-    </article>
+    {% for post in posts %}
+        <article>
+            <time>Published: {{post.published_date}}</time>
+            <h2><a href="">{{post.title}}</a></h2>
+            <p>{{post.text|linebreaksbr}}</p>
+        </article>
+    {% endfor %}
 </body>
 </html>

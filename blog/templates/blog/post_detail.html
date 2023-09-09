@@ -4,8 +4,14 @@
     <article class="post">
         {% if user.is_authenticated %}
         <aside class="actions">
-            <a href="{% url 'post_edit' pk=post.pk %}">
-                {% include './icons/pencil-fill.svg' %}
+            {% if post.published_date == None %}
+                <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-success">Publish</a>
+            {% endif %}
+            <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-edit"></span>
+            </a>
+            <a href="{% url 'post_delete' pk=post.pk %}" class="btn btn-danger">
+                <span class="glyphicon glyphicon-remove"></span>
             </a>
         </aside>
         {% endif %}
@@ -17,4 +23,23 @@
         <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
         <p>{{ post.text|linebreaksbr }}</p>
     </article>
+    <hr>
+    <a href="{% url 'add_comment_to_post' pk=post.pk %}" class="btn btn-primary">Add Comment</a>
+    {% for comment in post.comments.all %}
+    <div class="comment">
+        {% if user.is_authenticated or comment.approved_comment %}
+            <div class="date">
+                {{ comment.created_date }}
+                {% if not comment.approved_comment %}
+                <a href="{% url 'comment_remove' pk=comment.pk %}" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a>
+                <a href="{% url 'comment_approve' pk=comment.pk %}" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span></a>
+                {% endif %}
+            </div>
+            <strong>{{ comment.author }}</strong>
+            <p>{{ comment.text|linebreaks }}</p>
+        {% endif %}
+    </div>
+    {% empty %}
+    <p>No comments here yet:(</p>
+    {% endfor %}
 {% endblock %}
